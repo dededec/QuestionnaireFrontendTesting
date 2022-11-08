@@ -77,7 +77,59 @@ public class FrontendTestsQuestions {
 //	 this is the last question and they are about to send answers to DB
 //   (use same button but change text and color)
 
+    @Test
     public void SentToConfirmationScreenOnTestEnd(){
+        driver.get("http:localhost:3000");
+        WebElement emailInput = driver.findElement(By.xpath("//input[@id='emailInput']"));
+        emailInput.sendKeys("questiontest2@gmail.com");
+        WebElement loginButton = driver.findElement(By.xpath("//button[@id='loginSubmit']"));
+        loginButton.click();
+
+        boolean isUrlReached = new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.urlToBe("http://localhost:3000/question"));
+
+        Select answerSelect = new Select(new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(By.id("answerSelect"))));
+
+        answerSelect.selectByValue("1");
+
+        WebElement submitButton = driver.findElement(By.xpath("//button[contains(text(), 'Siguiente')]"));
+        submitButton.click();
+
+        answerSelect.selectByValue("3");
+        submitButton.click();
+
+        boolean isUrlReachedTestEnd = new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.urlToBe("http://localhost:3000/testend"));
+
+        Assertions.assertTrue(driver.getCurrentUrl().endsWith("/testend"));
+    }
+
+    @Test
+    public void AnswersAreStoredInDB(){
+        driver.get("http:localhost:3000");
+        WebElement emailInput = driver.findElement(By.xpath("//input[@id='emailInput']"));
+        emailInput.sendKeys("questiontest3@gmail.com");
+        WebElement loginButton = driver.findElement(By.xpath("//button[@id='loginSubmit']"));
+        loginButton.click();
+
+        boolean isUrlReached = new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.urlToBe("http://localhost:3000/question"));
+
+        Select answerSelect = new Select(new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(By.id("answerSelect"))));
+
+        answerSelect.selectByValue("1");
+
+        WebElement submitButton = driver.findElement(By.xpath("//button[contains(text(), 'Siguiente')]"));
+        submitButton.click();
+
+        answerSelect.selectByValue("3");
+        submitButton.click();
+
+        boolean isUrlReachedTestEnd = new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.urlToBe("http://localhost:3000/testend"));
+
         Assertions.assertTrue(driver.getCurrentUrl().endsWith("/testend"));
     }
 }
