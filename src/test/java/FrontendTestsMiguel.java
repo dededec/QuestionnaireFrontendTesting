@@ -3,7 +3,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class FrontendTests {
+public class FrontendTestsMiguel {
     private static ChromeDriver driver;
 
     @BeforeAll
